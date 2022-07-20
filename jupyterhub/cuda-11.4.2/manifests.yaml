@@ -391,8 +391,8 @@ items:
     source:
       type: Git
       git:
-        uri: 'https://github.com/red-hat-data-services/s2i-tensorflow-gpu-notebook'
-        ref: nb-5
+        uri: 'https://github.com/VaishnaviHire/s2i-tensorflow-gpu-notebook'
+        ref: test_tensorboard
     triggers:
       - type: ImageChange
         imageChange: {}
@@ -431,8 +431,8 @@ items:
     source:
       type: Git
       git:
-        uri: 'https://github.com/red-hat-data-services/s2i-pytorch-notebook'
-        ref: nb-4
+        uri: 'https://github.com/VaishnaviHire/s2i-pytorch-notebook'
+        ref: add_tb_proxy
     triggers:
       - type: ImageChange
         imageChange: {}
