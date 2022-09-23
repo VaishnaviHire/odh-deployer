@@ -82,11 +82,14 @@ oc new-project $ODH_MONITORING_PROJECT || echo "INFO: $ODH_MONITORING_PROJECT pr
 oc label namespace $ODH_MONITORING_PROJECT openshift.io/cluster-monitoring=true --overwrite=true
 oc label namespace $ODH_MONITORING_PROJECT  $NAMESPACE_LABEL --overwrite=true || echo "INFO: ${NAMESPACE_LABEL} label already exists."
 
-# Get the brand to determine if it's a dedicated system 
+# If rhodsquickstart CRD is found, delete it. Note: Remove this code in 1.19
+oc delete crd rhodsquickstarts.console.openshift.io 2>/dev/null || echo "INFO: Unable to delete Rhodsquickstart CRD"
+
+# Get the brand to determine if it's a dedicated system
 consoleBrand=$(oc get consoles.operator.openshift.io cluster -o jsonpath='{.spec.customization.brand}')
 oc apply -n ${ODH_PROJECT} -k odh-dashboard/crds
 # If we are dedicated install on prem apps.
-if [ "$consoleBrand"=="dedicated" ]; then
+if [ "$consoleBrand" == "dedicated" ]; then
   oc apply -n ${ODH_PROJECT} -k odh-dashboard/apps-on-prem
 else
   # Managed services has both the on prem and managed service additons.
